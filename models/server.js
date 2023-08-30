@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const { dbConnection } = require('../databse/config')
 
 const RESPONSE_CODES = {
   CONTINUE: 100,
@@ -55,8 +56,13 @@ class Server {
       }
     }
 
+    this.dbConnect()
     this.middlewars()
     this.routes()
+  }
+
+  async dbConnect(){
+    await dbConnection()
   }
 
   middlewars() {
