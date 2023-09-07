@@ -34,7 +34,7 @@ const postUsers = async (req = request, res = response) => {
     res.json({ user })
   } catch (error) {
     saveDB({ type: "ERROR", data: error })
-    return res.status(400).json(error)
+    return res.status(500).json(error)
   }
 }
 
@@ -59,7 +59,7 @@ const putUsers = async (req, res = response) => {
     res.json({ user })
   } catch (error) {
     saveDB({ type: "ERROR", data: error })
-    return res.status(400).json(error)
+    return res.status(500).json(error)
   }
 }
 

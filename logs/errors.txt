@@ -1,1 +1,1 @@
-{"index":0,"code":11000,"keyPattern":{"email":1},"keyValue":{"email":"arrmpz@gmail.com"}}
+{"code":"ERR_HTTP_HEADERS_SENT"}

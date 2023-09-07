@@ -50,6 +50,10 @@ class Server {
     this.app = express()
     this.port = process.env.PORT
     this.apiRoutes = {
+      auth: {
+        url: '/api/auth',
+        path: '../routes/auth.routes'
+      },
       users: {
         url: '/api/users',
         path: '../routes/users.routes'
@@ -75,6 +79,11 @@ class Server {
     this.app.use(
       this.apiRoutes.users.url,
       require(this.apiRoutes.users.path)
+    )
+
+    this.app.use(
+      this.apiRoutes.auth.url,
+      require(this.apiRoutes.auth.path)
     )
   }
 

@@ -10,6 +10,11 @@ const encryptPassword = ({ password }) => {
     }
 }
 
+const isValidPassword = (toReview, password) => {
+    return bcryptjs.compareSync(toReview, password)
+}
+
 module.exports = {
-    encryptPassword
+    encryptPassword,
+    isValidPassword
 }

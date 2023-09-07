@@ -1,10 +1,6 @@
 const { check } = require('express-validator')
-const {
-    isEmailRegistered,
-    isValidRol,
-    isValidUserId
-} = require('../../helpers/dbValidators')
-const { validateFields } = require('../fieldValidations')
+const { isEmailRegistered, isValidRol, isValidUserId } = require('../../helpers')
+const { hasRole, validateFields, validateToken } = require('..')
 
 const get = []
 
@@ -18,8 +14,8 @@ const post = [
 ]
 
 const put = [
-    check('id', 'id not valid').isMongoId(),
-    check('id').custom(isValidUserId),
+    //check('id', 'id not valid').isMongoId(),
+    //check('id').custom(isValidUserId),
     check('rol').custom(isValidRol),
     validateFields
 ]
@@ -27,6 +23,8 @@ const put = [
 const patch = []
 
 const deleteMiddleware = [
+    validateToken,
+    hasRole('ADMIN_ROL', 'SALES_ROL'),
     //check('id', 'id not valid').isMongoId(),
     //check('id').custom(isValidUserId),
     validateFields

@@ -7,10 +7,12 @@ const isEmailRegistered = async (email = '') => {
     if (existEmail) throw new Error(`email ${email} already registered`)
 }
 
-const isValidRol = async (rol = '') => {
-    const existRol = await Rol.findOne({ rol })
-
-    if (!existRol) throw new Error(`rol ${rol} not allowed`)
+const isValidRol = async (rol) => {
+    if (rol) {
+        const existRol = await Rol.findOne({ rol })
+    
+        if (!existRol) throw new Error(`rol ${rol} not allowed`)
+    }
 }
 
 const isValidUserId = async (id = '') => {

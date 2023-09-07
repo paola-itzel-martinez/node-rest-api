@@ -6,7 +6,7 @@ const dbConnection = async() => {
 
     console.log('Database online')
   } catch (error) {
-    console.log(error)
+    console.error(error)
     throw newError(`Error: ${error}`)
   }
 }
