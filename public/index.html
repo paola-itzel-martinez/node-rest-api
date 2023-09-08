@@ -29,12 +29,16 @@
 
   <script>
     function handleCredentialResponse(response) {
-        fetch('https://xsjmss-4000.csb.app/api/auth/googleSignIn', {
+        const url = `${window.location.origin}/api/auth/googleSignIn`
+        
+        fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ googleToken: response.credential })
+            body: JSON.stringify({
+              googleToken: response.credential
+            })
         })
         .then(response => response.json() )
         .then(response => localStorage.setItem('email', response.user.email ))

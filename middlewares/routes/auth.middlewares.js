@@ -8,7 +8,7 @@ const login = [
 ]
 
 const googleSignIn = [
-    check('id_token', 'id_token is missing').not().isEmpty(),
+    check('googleToken', 'id_token is missing').not().isEmpty(),
     validateFields
 ]
 
