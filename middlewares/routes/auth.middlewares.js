@@ -7,6 +7,12 @@ const login = [
     validateFields
 ]
 
+const googleSignIn = [
+    check('id_token', 'id_token is missing').not().isEmpty(),
+    validateFields
+]
+
 module.exports = {
+    googleSignIn,
     login
 }

@@ -1,9 +1,10 @@
 const { Router } = require('express')
-const auth = require('../controllers/auth.controller')
+const controllers = require('../controllers/auth.controller')
 const middlewares = require('../middlewares/routes/auth.middlewares')
 
 const router = Router()
 
-router.post('/login', middlewares.login, auth.login)
+router.post('/login', middlewares.login, controllers.login)
+router.post('/googleSignIn', middlewares.googleSignIn, controllers.googleSignIn)
 
 module.exports = router

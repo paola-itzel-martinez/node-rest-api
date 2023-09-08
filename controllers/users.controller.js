@@ -1,9 +1,8 @@
-const { request, response } = require('express')
+const { request } = require('express')
 const User = require('../models/user')
-const { encryptPassword } = require('../helpers/encryptPassword')
-const { saveDB } = require('../helpers/saveFile')
+const { createUser, encryptPassword, saveDB, setResponseError } = require('../helpers')
 
-const getUsers = async (req = request, res = response) => {
+const getUsers = async (req, response) => {
   const {
     limit = 10,
     skip = 0,
@@ -17,28 +16,25 @@ const getUsers = async (req = request, res = response) => {
       .skip(Number(skip))
   ])
 
-  res.json({ total, users })
+  response.json({ total, users })
 }
 
-const postUsers = async (req = request, res = response) => {
+const postUsers = async (req = request, response) => {
   const { name, email, password, rol } = req.body
-  let user = null
 
   try {
-    user = new User({ name, email, password, rol })
+    const { code, data } = await createUser({ name, email, password, rol })
 
-    user.password = encryptPassword({ password })
-  
-    await user.save()
+    if (code === 500) return setResponseError({ response })
 
-    res.json({ user })
+    response.json({ user: data })
   } catch (error) {
     saveDB({ type: "ERROR", data: error })
-    return res.status(500).json(error)
+    return setResponseError({ response, error })
   }
 }
 
-const putUsers = async (req, res = response) => {
+const putUsers = async (req, response) => {
   try { 
     const { id } = req.params
     const { name, password, img } = req.body
@@ -56,24 +52,24 @@ const putUsers = async (req, res = response) => {
 
     const user = await User.findByIdAndUpdate(id, newData)
 
-    res.json({ user })
+    response.json({ user })
   } catch (error) {
     saveDB({ type: "ERROR", data: error })
-    return res.status(500).json(error)
+    return setResponseError({ response, error })
   }
 }
 
-const patchUsers = (req, res = response) => {
-  res.json({
+const patchUsers = (req, response) => {
+  response.json({
     msg: 'patch API - controller'
   })
 }
 
-const deleteUsers = async (req, res = response) => {
+const deleteUsers = async (req, response) => {
   const { id } = req.params
   const user = await User.findByIdAndUpdate(id, { state: false })
 
-  res.json({ user })
+  response.json({ user })
 }
 
 module.exports = {

@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const PATHS = {
-    ERROR: './logs/errors.txt'
+    ERROR: './logs/errors.json'
 };
 
 const saveDB = ({ type, data }) => {
