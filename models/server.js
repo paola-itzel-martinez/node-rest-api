@@ -54,11 +54,23 @@ class Server {
         url: '/api/auth',
         path: '../routes/auth.routes'
       },
+      categories: {
+        url: '/api/categories',
+        path: '../routes/categories.routes'
+      },
+      products: {
+        url: '/api/products',
+        path: '../routes/products.routes'
+      },
+      search: {
+        url: '/api/search',
+        path: '../routes/search.routes'
+      },
       users: {
         url: '/api/users',
         path: '../routes/users.routes'
       }
-    }
+    },
 
     this.dbConnect()
     this.middlewars()
@@ -77,14 +89,30 @@ class Server {
 
   routes() {
     this.app.use(
+      this.apiRoutes.auth.url,
+      require(this.apiRoutes.auth.path)
+    )
+
+    this.app.use(
+      this.apiRoutes.categories.url,
+      require(this.apiRoutes.categories.path)
+    )
+
+    this.app.use(
+      this.apiRoutes.products.url,
+      require(this.apiRoutes.products.path)
+    )
+
+    this.app.use(
+      this.apiRoutes.search.url,
+      require(this.apiRoutes.search.path)
+    )
+
+    this.app.use(
       this.apiRoutes.users.url,
       require(this.apiRoutes.users.path)
     )
 
-    this.app.use(
-      this.apiRoutes.auth.url,
-      require(this.apiRoutes.auth.path)
-    )
   }
 
   listen(){

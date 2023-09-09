@@ -14,7 +14,7 @@ const validateToken = async (request, response, next) => {
 
     try {
         const { uid } = jwt.verify(token, process.env.LOGIN_TOKEN_KEY)
-        const user = await User.findOne({ _id: uid, state: true })
+        const user = await User.findOne({ _id: uid, status: true })
 
         if (!user) return setResponseError({ response, ...AUTH_ERROR })
         

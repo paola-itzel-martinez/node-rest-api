@@ -5,42 +5,40 @@ const {
   createUser,
   isValidPassword,
   googleLoginVerify,
-  saveDB,
   setResponseError
 } = require('../helpers')
 
 const AUTH_ERROR = {
   code: 400,
-  error: "bad email / password"
+  error: "Bad credentials"
 }
 
-const login = async(req = request, res = response) => {
-  const { email, password } = req.body
+const login = async(request, response) => {
+  const { email, password } = request.body
 
   try {
-    const user = await User.findOne({ email, state: true })
+    const user = await User.findOne({ email, status: true })
 
-    if (!user) return setResponseError({ response, ...AUTH_ERROR})
+    if (!user) return setResponseError({ response, ...AUTH_ERROR })
 
     if (!isValidPassword(password, user.password)) {
-      return setResponseError({ response, ...AUTH_ERROR})
+      return setResponseError({ response, ...AUTH_ERROR })
     }
 
     const token = await createJWT({ uid: user.id })
 
-    res.json({ token })
+    response.json({ token })
   } catch (error) {
-    saveDB({ type: "ERROR", data: error })
-    return res.status(500).json(error)
+    return setResponseError({ response, error })
   }
 }
 
-const googleSignIn = async(req = request, res = response) => {
+const googleSignIn = async(req, response) => {
   const { googleToken } = req.body
 
   try {
    const { name, picture, email } = await googleLoginVerify(googleToken)
-   const user = await User.findOne({ email, state: true })
+   const user = await User.findOne({ email, status: true })
 
    if (!user) {
       const { code } = await createUser({ name, email, password: 'goo' })
@@ -50,9 +48,8 @@ const googleSignIn = async(req = request, res = response) => {
 
    const token = await createJWT({ uid: user.id })
 
-   res.json({ token, user })
+   response.json({ token, user })
   } catch (error) {
-    saveDB({ type: "ERROR", data: error })
     return setResponseError({ response, error })
   }
 }

@@ -1,17 +1,17 @@
 const { Router } = require('express')
-const users = require('../controllers/users.controller')
+const { usersController } = require('../controllers')
 const middlewares = require('../middlewares/routes/user.middlewares')
 
 const router = Router()
 
-router.get('/', middlewares.get, users.getUsers)
+router.get('/', middlewares.get, usersController.getUsers)
 
-router.post('/', middlewares.post, users.postUsers)
+router.post('/', middlewares.post, usersController.postUsers)
 
-router.put('/:id', middlewares.put, users.putUsers)
+router.put('/:id', middlewares.put, usersController.putUsers)
 
-router.patch('/', middlewares.patch, users.patchUsers)
+router.patch('/', middlewares.patch, usersController.patchUsers)
 
-router.delete('/:id', middlewares.delete, users.deleteUsers)
+router.delete('/:id', middlewares.delete, usersController.deleteUsers)
 
 module.exports = router

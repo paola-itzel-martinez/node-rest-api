@@ -11,8 +11,6 @@ async function googleLoginVerify(idToken) {
     return ticket.getPayload()
 }
 
-googleLoginVerify().catch(console.error);
-
 module.exports = {
     googleLoginVerify
 }

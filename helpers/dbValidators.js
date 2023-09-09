@@ -1,5 +1,4 @@
-const Rol = require('../models/rol')
-const User = require('../models/user')
+const { Category, Rol, Product, User } = require('../models')
 
 const isEmailRegistered = async (email = '') => {
     const existEmail = await User.findOne({ email })
@@ -9,20 +8,42 @@ const isEmailRegistered = async (email = '') => {
 
 const isValidRol = async (rol) => {
     if (rol) {
-        const existRol = await Rol.findOne({ rol })
+        const exist = await Rol.findOne({ rol })
     
-        if (!existRol) throw new Error(`rol ${rol} not allowed`)
+        if (!exist) throw new Error(`rol ${rol} not allowed`)
     }
 }
 
 const isValidUserId = async (id = '') => {
-    const existUser = await User.findById({ id })
+    const exist = await User.findById({ id })
 
-    if (!existUser) throw new Error(`id ${id} not exists`)
+    if (!exist) throw new Error(`id ${id} not exists`)
+}
+
+const isValidCategoryId = async(id = '') => {
+    try {
+        const exist = await Category.findById(id)
+
+        if (!exist) throw new Error(`id ${id} not exists`)
+    } catch (error) {
+        throw new Error(error)
+    }
+}
+
+const isValidProductId = async(id = '') => {
+    try {
+        const exist = await Product.findById(id)
+
+        if (!exist) throw new Error(`id ${id} not exists`)
+    } catch (error) {
+        throw new Error(error)
+    }
 }
 
 module.exports = {
     isEmailRegistered,
+    isValidCategoryId,
     isValidRol,
+    isValidProductId,
     isValidUserId
 }

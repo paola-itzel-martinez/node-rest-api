@@ -1,9 +1,14 @@
+
+const { saveDB } = require('./saveFile')
+
 const setResponseError = ({
     response,
-    code = 500,
+    code = 400,
     error = 'Failed request'
 }) => {
-    return response.status(code).json({ error })
+    console.log(error)
+    saveDB({ type: "ERROR", data: error })
+    return response.status(code).json({ code, error })
 }
 
 module.exports = {

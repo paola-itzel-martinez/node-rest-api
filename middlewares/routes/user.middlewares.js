@@ -24,7 +24,7 @@ const patch = []
 
 const deleteMiddleware = [
     validateToken,
-    hasRole('ADMIN_ROL', 'SALES_ROL'),
+    hasRole('ADMIN_ROL'),
     //check('id', 'id not valid').isMongoId(),
     //check('id').custom(isValidUserId),
     validateFields

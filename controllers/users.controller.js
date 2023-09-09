@@ -1,17 +1,17 @@
 const { request } = require('express')
 const User = require('../models/user')
-const { createUser, encryptPassword, saveDB, setResponseError } = require('../helpers')
+const { createUser, encryptPassword, setResponseError } = require('../helpers')
 
 const getUsers = async (req, response) => {
   const {
     limit = 10,
     skip = 0,
-    state = true
+    status = true
   } = req.query
 
   const [total, users] = await Promise.all([
-    User.countDocuments({ state }),
-    User.find({ state })
+    User.countDocuments({ status }),
+    User.find({ status })
       .limit(Number(limit))
       .skip(Number(skip))
   ])
@@ -29,7 +29,6 @@ const postUsers = async (req = request, response) => {
 
     response.json({ user: data })
   } catch (error) {
-    saveDB({ type: "ERROR", data: error })
     return setResponseError({ response, error })
   }
 }
@@ -54,7 +53,6 @@ const putUsers = async (req, response) => {
 
     response.json({ user })
   } catch (error) {
-    saveDB({ type: "ERROR", data: error })
     return setResponseError({ response, error })
   }
 }
@@ -66,10 +64,14 @@ const patchUsers = (req, response) => {
 }
 
 const deleteUsers = async (req, response) => {
-  const { id } = req.params
-  const user = await User.findByIdAndUpdate(id, { state: false })
-
-  response.json({ user })
+  try {
+    const { id } = req.params
+    const user = await User.findByIdAndUpdate(id, { status: false })
+  
+    response.json({ user })
+  } catch (error) {
+    return setResponseError({ response, error })
+  }
 }
 
 module.exports = {

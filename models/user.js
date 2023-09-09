@@ -22,7 +22,7 @@ const UserSchema = Schema({
     emun: ['ADMIN_ROLE', 'USER_ROLE', 'SALES_ROLE'],
     default: 'USER_ROLE'
   },
-  state: {
+  status: {
     type: Boolean,
     default: true
   },
