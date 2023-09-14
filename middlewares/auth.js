@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
-const User = require("../models/user")
-const { setResponseError} = require("../helpers/errors")
+const { User } = require("../models")
+const { setResponseError } = require("../helpers")
 
 const AUTH_ERROR = {
     code: 401,

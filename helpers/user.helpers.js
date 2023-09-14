@@ -2,6 +2,28 @@ const { ObjectId } = require('mongoose').Types
 const { encryptPassword } = require('./encryptPassword')
 const { User } = require('../models')
 
+const searchUserById = async({ id }) => {
+  try {
+    const isMongoId = ObjectId.isValid(id)
+
+    if (!isMongoId) return { code: 500 }
+
+    const user = await User.findById(id)
+
+    return {
+      code: 200,
+      data: {
+        user
+      }
+    }
+  } catch (error) {
+    return {
+      code: 500,
+      error
+    }
+  }
+}
+
 const searchUser = async(term) => {
   const status = true
 
@@ -66,5 +88,6 @@ const createUser = async(newUser) => {
 
 module.exports = {
   searchUser,
+  searchUserById,
   createUser
 }

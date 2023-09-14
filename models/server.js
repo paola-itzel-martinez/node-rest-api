@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors')
+const fileUpload = require("express-fileupload")
 const { dbConnection } = require('../databse/config')
 
 const RESPONSE_CODES = {
@@ -66,6 +67,10 @@ class Server {
         url: '/api/search',
         path: '../routes/search.routes'
       },
+      upload: {
+        url: '/api/upload',
+        path: '../routes/upload.routes'
+      },
       users: {
         url: '/api/users',
         path: '../routes/users.routes'
@@ -85,6 +90,11 @@ class Server {
     this.app.use(cors())
     this.app.use(express.json())
     this.app.use(express.static('public'))
+    this.app.use(fileUpload({
+      useTempFiles : true,
+      tempFileDir : '/tmp/',
+      createParentPath: true
+    }))
   }
 
   routes() {
@@ -109,6 +119,11 @@ class Server {
     )
 
     this.app.use(
+      this.apiRoutes.upload.url,
+      require(this.apiRoutes.upload.path)
+    )
+
+    this.app.use(
       this.apiRoutes.users.url,
       require(this.apiRoutes.users.path)
     )
@@ -117,7 +132,7 @@ class Server {
 
   listen(){
     this.app.listen(this.port, () => {
-      console.log(`Example app listening on PORT ${this.port}`)
+      console.info(`Example app listening on PORT ${this.port}`)
     })
   }
 }

@@ -1,6 +1,28 @@
 const { ObjectId } = require('mongoose').Types
 const { Product } = require('../models')
 
+const searchProductById =  async({ id }) => {
+  try {
+    const isMongoId = ObjectId.isValid(id)
+
+    if (!isMongoId) return { code: 500 }
+
+    const product = await Product.findById(id)
+
+    return {
+      code: 200,
+      data: {
+        product
+      }
+    }
+  } catch (error) {
+    return {
+      code: 500,
+      error
+    }
+  }
+}
+
 const searchProducts = async(term) => {
   const status = true
 
@@ -51,5 +73,6 @@ const searchProducts = async(term) => {
 }
 
 module.exports = {
-    searchProducts
+  searchProductById,
+  searchProducts
 }

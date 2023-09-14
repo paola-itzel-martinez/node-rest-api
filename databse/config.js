@@ -4,7 +4,7 @@ const dbConnection = async() => {
   try {
     await moongose.connect(process.env.MONGO_DB_CNN)
 
-    console.log('Database online')
+    console.info('Database online')
   } catch (error) {
     console.error(error)
     throw newError(`Error: ${error}`)

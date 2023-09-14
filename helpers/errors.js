@@ -6,7 +6,7 @@ const setResponseError = ({
     code = 400,
     error = 'Failed request'
 }) => {
-    console.log(error)
+    console.error(error)
     saveDB({ type: "ERROR", data: error })
     return response.status(code).json({ code, error })
 }
