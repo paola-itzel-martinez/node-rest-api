@@ -1,26 +1,16 @@
 {
-  "name": "rest-server",
-  "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
-    "start": "node index"
+    "start": "nodemon index"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "express-validator": "^7.0.1",
+    "mongoose": "^7.4.5"
   },
-  "devDependencies": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/paola-itzel-martinez/node-rest-api.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/paola-itzel-martinez/node-rest-api/issues"
-  },
-  "homepage": "https://github.com/paola-itzel-martinez/node-rest-api#readme",
-  "description": ""
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
 }
